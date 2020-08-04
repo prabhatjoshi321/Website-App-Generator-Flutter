@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'dart:convert';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'progress_hud.dart';
+import 'dart:convert';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -60,6 +60,7 @@ Future<bool> _exitApp(BuildContext context) async {
 }
 
 class _WebViewExampleState extends State<WebViewExample> {
+  bool _isLoading = true;
   final Completer<WebViewController> _controller =
       Completer<WebViewController>();
 
@@ -81,35 +82,47 @@ class _WebViewExampleState extends State<WebViewExample> {
         ),
         // We're using a Builder here so we have a context that is below the Scaffold
         // to allow calling Scaffold.of(context) so we can show a snackbar.
-        body: Builder(builder: (BuildContext context) {
-          return WebView(
-            initialUrl: 'https://brandfabricator.tech/iswadeshi/',
-            javascriptMode: JavascriptMode.unrestricted,
-            onWebViewCreated: (WebViewController webViewController) {
-              _controller.complete(webViewController);
-            },
-            // TODO(iskakaushik): Remove this when collection literals makes it to stable.
-            // ignore: prefer_collection_literals
-            javascriptChannels: <JavascriptChannel>[
-              _toasterJavascriptChannel(context),
-            ].toSet(),
-            navigationDelegate: (NavigationRequest request) {
-              if (request.url.startsWith('https://www.youtube.com/')) {
-                print('blocking navigation to $request}');
-                return NavigationDecision.prevent;
-              }
-              if (request.url.startsWith('https://flutter.dev/docs')) {
-                print('blocking navigation to $request}');
-                return NavigationDecision.prevent;
-              }
-              print('allowing navigation to $request');
-              return NavigationDecision.navigate;
-            },
-            onPageFinished: (String url) {
-              print('Page finished loading: $url');
-            },
-          );
-        }),
+        body: ProgressHUD(
+          child: Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Stack(
+                children: <Widget>[
+                  Builder(builder: (BuildContext context) {
+                    return WebView(
+                      initialUrl: 'https://brandfabricator.tech/iswadeshi/',
+                      javascriptMode: JavascriptMode.unrestricted,
+                      onWebViewCreated: (WebViewController webViewController) {
+                        _controller.complete(webViewController);
+                      },
+                      // TODO(iskakaushik): Remove this when collection literals makes it to stable.
+                      // ignore: prefer_collection_literals
+                      javascriptChannels: <JavascriptChannel>[
+                        _toasterJavascriptChannel(context),
+                      ].toSet(),
+                      navigationDelegate: (NavigationRequest request) {
+                        if (request.url
+                            .startsWith('https://www.youtube.com/')) {
+                          print('blocking navigation to $request}');
+                          return NavigationDecision.prevent;
+                        }
+                        if (request.url
+                            .startsWith('https://flutter.dev/docs')) {
+                          print('blocking navigation to $request}');
+                          return NavigationDecision.prevent;
+                        }
+                        print('allowing navigation to $request');
+                        return NavigationDecision.navigate;
+                      },
+                      onPageFinished: (String url) {
+                        print('Page finished loading: $url');
+                      },
+                    );
+                  }),
+                ],
+              )),
+          inAsyncCall: _isLoading,
+          opacity: 0.0,
+        ),
       ),
     );
   }

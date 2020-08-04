@@ -1,28 +1,9 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'progress_hud.dart';
 
-class HomeScreen extends StatefulWidget {
-  @override
-  _HomeScreenState createState() => new _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: const Color(0xFFf7bf87),
-        primaryColorDark: const Color(0xFFf7bf87),
-        accentColor: const Color(0xFFf7bf87),
-      ),
-      home: WebViewExample(),
-    );
-  }
-}
+void main() => runApp(MaterialApp(home: WebViewExample()));
 
 const String kNavigationExamplePage = '''
 <!DOCTYPE html><html>
@@ -68,22 +49,19 @@ class _WebViewExampleState extends State<WebViewExample> {
     return WillPopScope(
       onWillPop: () => _exitApp(context),
       child: Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(0.0), // here the desired height
-          child: AppBar(
-            actions: <Widget>[
-              NavigationControls(_controller.future),
-            ],
-            backgroundColor: const Color(0xFFf7bf87),
-            elevation: 0.0,
-          ),
+        appBar: AppBar(
+          title: const Text('Flutter WebView example'),
+          // This drop down menu demonstrates that Flutter widgets can be shown over the web view.
+          actions: <Widget>[
+            NavigationControls(_controller.future),
+            SampleMenu(_controller.future),
+          ],
         ),
         // We're using a Builder here so we have a context that is below the Scaffold
         // to allow calling Scaffold.of(context) so we can show a snackbar.
         body: Builder(builder: (BuildContext context) {
           return WebView(
-            initialUrl: 'https://brandfabricator.tech/iswadeshi/',
+            initialUrl: 'https://flutter.dev',
             javascriptMode: JavascriptMode.unrestricted,
             onWebViewCreated: (WebViewController webViewController) {
               _controller.complete(webViewController);
@@ -110,6 +88,7 @@ class _WebViewExampleState extends State<WebViewExample> {
             },
           );
         }),
+        floatingActionButton: favoriteButton(),
       ),
     );
   }
