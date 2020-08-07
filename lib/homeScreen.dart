@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'progress_hud.dart';
 
 class HomeScreen extends StatefulWidget {
   @override

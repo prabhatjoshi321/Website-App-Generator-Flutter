@@ -2,7 +2,7 @@ name: iswadeshi
 description: A new Flutter project.
 
 
-publish_to: 'none' 
+publish_to: 'none'
 
 version: 1.0.0+1
 
@@ -13,9 +13,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^0.1.2
-  webview_flutter: ^0.3.3
-  url_launcher: ^5.2.5
-  flutter_web_view: ^0.0.6
+  webview_flutter: ^0.3.11
 
 
 
@@ -24,14 +22,15 @@ dependencies:
 
 
 
-dev_dependencies: 
+
+dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_launcher_icons: ^0.7.5
 
 flutter_icons:
-  image_path: "assets/images/icon.png" 
+  image_path: "assets/images/icon.png"
   android: true
   ios: true
 
