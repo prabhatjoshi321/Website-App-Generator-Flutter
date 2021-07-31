@@ -36,4 +36,4 @@ This project utilises flutter to output **cross platform apps** that can be uplo
 
 * For IOS, follow [this](https://flutter.dev/docs/deployment/ios) guide for deploying it on appstore
 
-#### The app you obtain is signed by my key, If you want to sign it with your key, refer [this](https://flutter.dev/docs/deployment/android) guide to dign it with your own key
+#### The app you obtain is signed by my key, If you want to sign it with your key, refer [this](https://flutter.dev/docs/deployment/android) guide to sign it with your own key
