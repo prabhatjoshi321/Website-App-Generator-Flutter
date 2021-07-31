@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -13,11 +14,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: const Color(0xFFf7bf87),
-        primaryColorDark: const Color(0xFFf7bf87),
-        accentColor: const Color(0xFFf7bf87),
-      ),
       home: WebViewExample(),
     );
   }
@@ -74,7 +70,7 @@ class _WebViewExampleState extends State<WebViewExample> {
             actions: <Widget>[
               NavigationControls(_controller.future),
             ],
-            backgroundColor: const Color(0xFFf7bf87),
+            backgroundColor: const Color(0xFFffffff), //Theme Color above
             elevation: 0.0,
           ),
         ),
@@ -82,23 +78,44 @@ class _WebViewExampleState extends State<WebViewExample> {
         // to allow calling Scaffold.of(context) so we can show a snackbar.
         body: Builder(builder: (BuildContext context) {
           return WebView(
-            initialUrl: 'https://www.iswadeshi.com/',
+            initialUrl: 'https://dealtaz.com/',
             javascriptMode: JavascriptMode.unrestricted,
             onWebViewCreated: (WebViewController webViewController) {
               _controller.complete(webViewController);
             },
-            // TODO(iskakaushik): Remove this when collection literals makes it to stable.
             // ignore: prefer_collection_literals
             javascriptChannels: <JavascriptChannel>[
               _toasterJavascriptChannel(context),
             ].toSet(),
             navigationDelegate: (NavigationRequest request) {
-              if (request.url.startsWith('https://www.youtube.com/')) {
+              if (request.url.contains("mailto:")) {
                 print('blocking navigation to $request}');
+                launch(request.url);
                 return NavigationDecision.prevent;
               }
-              if (request.url.startsWith('https://flutter.dev/docs')) {
+              if (request.url.contains("whatsapp:")) {
                 print('blocking navigation to $request}');
+                launch(request.url);
+                return NavigationDecision.prevent;
+              }
+              if (request.url.contains("sms:")) {
+                print('blocking navigation to $request}');
+                launch(request.url);
+                return NavigationDecision.prevent;
+              }
+              if (request.url.contains("tel:")) {
+                print('blocking navigation to $request}');
+                launch(request.url);
+                return NavigationDecision.prevent;
+              }
+              if (request.url.contains("https://api.whatsapp.com/send")) {
+                print('blocking navigation to $request}');
+                launch(request.url);
+                return NavigationDecision.prevent;
+              }
+              if (request.url.contains("https://wa.me/")) {
+                print('blocking navigation to $request}');
+                launch(request.url);
                 return NavigationDecision.prevent;
               }
               print('allowing navigation to $request');

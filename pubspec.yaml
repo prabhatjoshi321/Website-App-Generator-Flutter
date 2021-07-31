@@ -1,10 +1,9 @@
-name: iswadeshi
+name: webapp
 description: A new Flutter project.
-
 
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 1.0.0+3
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -12,22 +11,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^0.1.2
-  webview_flutter: ^0.3.11
-
-
-
-
-
-
-
-
+  cupertino_icons: ^1.0.0
+  webview_flutter: ^0.3.24
+  url_launcher: ^5.7.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-  flutter_launcher_icons: ^0.7.5
+  flutter_launcher_icons: ^0.8.0
 
 flutter_icons:
   image_path: "assets/images/icon.png"
@@ -36,8 +27,7 @@ flutter_icons:
 
 flutter:
 
-
   uses-material-design: true
-
   assets:
     - assets/images/
+

@@ -1,4 +1,4 @@
-package com.example.iswadeshi
+package com.generate.webapp
 
 import io.flutter.embedding.android.FlutterActivity
 
